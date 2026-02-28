@@ -43,11 +43,12 @@
       }
 
       .game-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        display: flex;
         gap: 20px;
         width: 100%;
         max-width: 1200px;
+        flex-direction: row;
+        align-items: stretch;
       }
 
       /* Ajuste para telas bem pequenas */
