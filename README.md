@@ -209,11 +209,3 @@ Hospede um `.html` em qualquer lugar (GitHub Pages, Vercel, etc) e use:
 ## Licença
 
 Este projeto é para fins educacionais. Respeite as licenças dos jogos/mods que você adiciona ao catálogo.
-
-## Contato & Contribuições
-
-Dúvidas? Abra uma issue no repositório GitHub.
-
----
-
-**Made with ❤️ for kids. No ads. No tracking.**
