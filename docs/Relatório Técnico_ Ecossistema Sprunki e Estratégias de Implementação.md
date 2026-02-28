@@ -162,3 +162,17 @@ A melhor solução técnica:
 •Customização: Posso criar para você um index.html único que você hospeda no GitHub Pages.  
 Análise Finalizada. Estou pronto para preparar o seu ambiente "limpo" se desejar seguir por este caminho.
 
+
+## **6\. Fontes**
+https://turbowarp.org/1172002412
+https://turbowarp.org/1260865301
+https://turbowarp.org/1129445410
+https://scratch.mit.edu/studios/36388352
+https://scratch.mit.edu/studios/50687547/
+https://scratch.mit.edu/studios/35868177
+
+## **7\. Estrutura Embed TurboWarp**
+https://turbowarp.org/${currentGame.source_id}/embed
+
+## **8\. Doc TurboWarp**
+https://docs.turbowarp.org/embedding

@@ -1,73 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sprunki Hub</title>
     <style>
-        /* CSS Reset */
-        body, h1, p {
-            margin: 0;
-            padding: 0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+      }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+      .welcome-container {
+        text-align: center;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
 
-        .container {
-            text-align: center;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+      .welcome-container h1 {
+        font-size: 2.5rem;
+        color: #0078d7;
+      }
 
-        .container h1 {
-            font-size: 2.5rem;
-            color: #0078d7;
-        }
+      .welcome-container p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+      }
 
-        .container p {
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
+      .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: #fff;
+        background-color: #0078d7;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+      }
 
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            color: #fff;
-            background-color: #0078d7;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
+      .btn:hover {
+        background-color: #005bb5;
+      }
 
-        .btn:hover {
-            background-color: #005bb5;
-        }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: none;
+      }
+
+      body.is-playing {
+        display: block;
+      }
+
+      body.is-playing iframe {
+        display: block;
+        position: fixed;
+        inset: 0;
+      }
+
+      body.is-playing .welcome-container {
+        display: none;
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Bem-vindo ao Sprunki Hub</h1>
-        <p>Explore o ecossistema e descubra novas possibilidades!</p>
-        <a href="#" class="btn">Começar</a>
+  </head>
+  <body>
+    <div class="welcome-container">
+      <h1>Bem-vindo ao Sprunki Hub</h1>
+      <p>Explore a coleção de jogos!</p>
+      <a href="#" class="btn">Jogar</a>
     </div>
 
+    <iframe
+      id="gameFrame"
+      title="Jogo"
+      allowtransparency="true"
+      frameborder="0"
+      scrolling="no"
+      allowfullscreen
+      style="color-scheme: auto"
+    ></iframe>
+
     <script>
-        document.querySelector('.btn').addEventListener('click', () => {
-            alert('Bem-vindo ao Sprunki Hub!');
-        });
+      const welcomeContainer = document.querySelector('.welcome-container');
+      const iframe = document.querySelector('#gameFrame');
+      const playButton = document.querySelector('.btn');
+
+      function loadGame(gameId) {
+        iframe.src = `https://turbowarp.org/${gameId}/embed`;
+      }
+
+      playButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        if (!welcomeContainer || !iframe) return;
+
+        document.body.classList.add('is-playing');
+
+        const exampleGameId = '1172002412';
+        loadGame(exampleGameId);
+      });
     </script>
-</body>
+  </body>
 </html>

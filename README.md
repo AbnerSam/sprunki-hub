@@ -7,7 +7,6 @@ Catálogo interativo de jogos Sprunki - **Sem Anúncios**, **Funciona Offline**
 Um PWA (Progressive Web App) que funciona como um launcher/catálogo para diferentes versões e mods do Sprunki. 
 
 - ✅ Sem anúncios invasivos do Unity/APK
-- ✅ Funciona offline (Service Worker com cache)
 - ✅ Interface responsiva para tablets antigos
 - ✅ Extensível (adicione jogos editando `catalog.json`)
 
@@ -92,7 +91,7 @@ Edit `public/catalog.json` para adicionar novos jogos:
 }
 ```
 - Usa TurboWarp (compilador Scratch rápido)
-- URL: `https://turbowarp.org/embed/{id}`
+- URL: `https://turbowarp.org/{id}/embed`
 
 #### `url` (Para arquivos .html customizados)
 ```json
@@ -111,7 +110,7 @@ Quando você clica em "Jogar Agora", o app:
 4. Service Worker cacheia os assets
 
 ```javascript
-frameUrl = `https://turbowarp.org/embed/${currentGame.source_id}`;
+frameUrl = `https://turbowarp.org/${currentGame.source_id}/embed`;
 ```
 
 ### 4. **Cache & Offline**
