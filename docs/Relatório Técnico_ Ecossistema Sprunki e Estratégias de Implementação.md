@@ -84,7 +84,7 @@ Um arquivo catalog.json no repositório. Para adicionar um novo Sprunki, você s
 Offline/PWA: Vite PWA Plugin.  
 Ele vai configurar automaticamente o manifest.webmanifest e o Service Worker com estratégia de CacheFirst para os arquivos .sb3. Uma vez carregado, o jogo funciona sem internet.  
 3\. Arquitetura do Catálogo (O segredo da dinamicidade)  
-Podemos estruturar o seu catalog.json 4\.   
+Podemos estruturar o seu catalog.json 4\.
 A Stack "Pé no Chão" Para rodar liso no seu GitHub Pages e no tablet:  
 Estrutura: HTML5 simples.  
 CSS puro para o layout dos cards ser responsivo e bonito sem esforço.  
@@ -96,7 +96,7 @@ index.html: A galeria de jogos.
 catalog.json: Sua "lista de compras" de Sprunkis.  
 app.js: O código que lê o JSON e cria a galeria.
 
- estrutura básica do launcher PWA usando Vite \+ Vanilla JS, com catálogo dinâmico em \`catalog.json\` e um sistema leve para carregar e jogar diferentes versões do Sprunki no tablet antigo.   
+ estrutura básica do launcher PWA usando Vite \+ Vanilla JS, com catálogo dinâmico em \`catalog.json\` e um sistema leve para carregar e jogar diferentes versões do Sprunki no tablet antigo.
 sprunki-all-phases-beat-maker-v0.3.5-mod.apk, DuoMix\_7.10\_APKPure.xapk
 
 Análise do primeiro APK concluída (sprunki-all-phases-beat-maker-v0.3.5-mod.apk).  
@@ -117,62 +117,20 @@ Particularidade: Ele utiliza o sistema de localização da Unity e também o sis
 Resumo da comparação:  
 Ambos os APKs (LiteAPKs e APKPure) não são apenas WebViews, mas jogos Unity nativos. No entanto, eles são "re-skins" ou ports não oficiais do projeto original do Scratch, recheados de publicidade e rastreadores. Eles são "pesados" para um tablet antigo não apenas pelo jogo em si, mas por toda a infraestrutura de anúncios rodando em background.
 
-# **Relatório Técnico: Arquitetura e Engenharia dos Apps Sprunki (Android)**
-
-Este relatório detalha a stack tecnológica e os métodos de desenvolvimento utilizados na criação dos aplicativos Android baseados no universo Sprunki, após a análise exaustiva de três amostras representativas.
-
-## **1\. Stack Tecnológica Dominante**
-
-Diferente da versão web original (Scratch/JS), as versões mobile distribuídas em lojas de APKs não são WebViews.  
-•Engine de Jogo: Unity (Versões 2021.x a 2022.x).  
-•Scripting Backend: IL2CPP (Intermediate Language To C++). O código C\# é convertido em C++ e compilado nativamente (libil2cpp.so), o que melhora a performance, mas dificulta a engenharia reversa.  
-•Arquitetura de Assets: Unity Addressables. Os apps não contêm todos os sons e imagens localmente. Eles baixam "bundles" (pacotes de assets) de CDNs (como CloudFront) durante a execução. Isso explica por que o jogo exige internet mesmo parecendo simples.
-
-## **2\. Anatomia do Aplicativo**
-
-Os apps são estruturados como "Recipientes de Monetização":  
-•Core do Jogo: Um player de áudio/animação implementado em Unity que replica a lógica do Scratch original.  
-•Camada de Publicidade (Ad-Stack): O ponto mais crítico. Todos os apps analisados possuem:  
-•Mediation SDKs: AppLovin (MAX), IronSource, Mintegral.  
-•Ad Networks: Facebook Audience Network, Pangle (TikTok Ads), Google AdMob, Unity Ads.  
-•Analytics/Trackers: Firebase Analytics, AppsFlyer, Adjust, Crashlytics.  
-•Permissões Invasivas: Permissões como READ\_PHONE\_STATE, ACCESS\_WIFI\_STATE e AD\_ID são usadas para criar perfis de usuário e direcionar anúncios, o que é desnecessário para um jogo de música infantil.
-
-## **3\. Fluxo de Criação (Como são feitos)**
-
-O processo de "desenvolvimento" desses apps segue um padrão industrial:  
-1.Extração de Assets: Os sons e sprites são extraídos do projeto original .sb3 (Scratch).  
-2.Portabilidade para Unity: Um template genérico em Unity é usado para carregar esses assets. O desenvolvedor apenas troca os assets e gera um novo APK (Reskin).  
-3.Injeção de Ads: Scripts automatizados configuram os SDKs de anúncios para disparar em intervalos (Interstitials) ou para desbloquear "Phases" (Rewarded Video).  
-4.Distribuição: Publicação em massa em sites de APKs e Play Store com nomes variados para capturar buscas orgânicas.
-
-## **4\. Por que isso é ruim para o seu caso?**
-
-•Hardware Antigo: O tablet antigo sofre para rodar a engine Unity \+ os processos de background dos 5+ SDKs de anúncios que ficam tentando carregar vídeos em cache.  
-•Consumo de Dados: Como os assets são baixados via Addressables, o app consome internet constantemente.  
-•Experiência do Usuário (TEA): Para uma criança autista de 3 anos, os pop-ups inesperados e as mudanças de tela para anúncios são extremamente disruptivos e podem causar frustração/crises.
-
-## **5\. Veredito e Recomendação**
-
-Os APKs analisados são "bloatware" de publicidade.  
-A melhor solução técnica:  
-1.Ignorar os APKs: Eles não oferecem uma base limpa para modificação.  
-2.Solução Web Pura (Caminho Turbowarp): Usar o código original do Scratch compilado via TurboWarp.  
-•Vantagem: É JS puro, roda no navegador do tablet (Chrome/Samsung Internet), não tem processos de background e podemos embutir todos os sons no arquivo para funcionar offline.  
-•Customização: Posso criar para você um index.html único que você hospeda no GitHub Pages.  
-Análise Finalizada. Estou pronto para preparar o seu ambiente "limpo" se desejar seguir por este caminho.
-
-
 ## **6\. Fontes**
-https://turbowarp.org/1172002412
-https://turbowarp.org/1260865301
-https://turbowarp.org/1129445410
-https://scratch.mit.edu/studios/36388352
-https://scratch.mit.edu/studios/50687547/
-https://scratch.mit.edu/studios/35868177
+
+<https://turbowarp.org/1172002412>
+<https://turbowarp.org/1260865301>
+<https://turbowarp.org/1129445410>
+
+<https://scratch.mit.edu/studios/36388352>
+<https://scratch.mit.edu/studios/50687547>
+<https://scratch.mit.edu/studios/35868177>
 
 ## **7\. Estrutura Embed TurboWarp**
-https://turbowarp.org/${currentGame.source_id}/embed
+
+<https://turbowarp.org/${currentGame.source_id}/embed>
 
 ## **8\. Doc TurboWarp**
-https://docs.turbowarp.org/embedding
+
+<https://docs.turbowarp.org/embedding>

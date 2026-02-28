@@ -5,111 +5,235 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sprunki Hub</title>
     <style>
+      :root {
+        --primary: #0078d7;
+        --primary-dark: #005bb5;
+        --bg: #f4f4f9;
+        --text: #333;
+        --card-bg: #fff;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
       body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
-        color: #333;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
         margin: 0;
-      }
-
-      .welcome-container {
-        text-align: center;
         padding: 20px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
       }
 
-      .welcome-container h1 {
-        font-size: 2.5rem;
-        color: #0078d7;
+      /* Responsividade básica para o container */
+      @media (max-width: 600px) {
+        body {
+          padding: 10px;
+        }
+        h1 {
+          font-size: 1.8rem;
+          margin-bottom: 20px;
+        }
       }
 
-      .welcome-container p {
-        font-size: 1.2rem;
-        margin-top: 10px;
+      h1 {
+        color: var(--primary);
+        margin-bottom: 30px;
+      }
+
+      .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        width: 100%;
+        max-width: 1200px;
+      }
+
+      /* Ajuste para telas bem pequenas */
+      @media (max-width: 320px) {
+        .game-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .game-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: transform 0.2s, box-shadow 0.2s;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .game-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+      }
+
+      .game-thumb {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        background-color: #ddd;
+        border-bottom: 1px solid #eee;
+      }
+
+      .game-info {
+        padding: 15px;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .game-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #222;
       }
 
       .btn {
         display: inline-block;
-        margin-top: 20px;
-        padding: 10px 20px;
+        padding: 12px 20px; /* Aumentado para touch */
         font-size: 1rem;
         color: #fff;
-        background-color: #0078d7;
+        background-color: var(--primary);
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
         text-decoration: none;
+        transition: background-color 0.2s;
+        -webkit-tap-highlight-color: transparent;
       }
 
       .btn:hover {
-        background-color: #005bb5;
+        background-color: var(--primary-dark);
       }
 
-      iframe {
+      #game-view {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: #000;
+        z-index: 1000;
+      }
+
+      #game-view iframe {
         width: 100%;
         height: 100%;
         border: none;
-        display: none;
+      }
+
+      #back-btn {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        z-index: 1001;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 10px 16px;
+        border-radius: 50px; /* Mais arredondado no mobile */
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        font-weight: bold;
+        backdrop-filter: blur(4px);
+      }
+
+      @media (max-width: 600px) {
+        #back-btn {
+          top: 10px;
+          left: 10px;
+          padding: 8px 14px;
+          font-size: 0.9rem;
+        }
       }
 
       body.is-playing {
+        overflow: hidden;
+      }
+
+      body.is-playing #game-view {
         display: block;
       }
 
-      body.is-playing iframe {
-        display: block;
-        position: fixed;
-        inset: 0;
-      }
-
-      body.is-playing .welcome-container {
+      body.is-playing .main-content {
         display: none;
       }
     </style>
   </head>
   <body>
-    <div class="welcome-container">
-      <h1>Bem-vindo ao Sprunki Hub</h1>
-      <p>Explore a coleção de jogos!</p>
-      <a href="#" class="btn">Jogar</a>
+    <div class="main-content">
+      <h1>Sprunki Hub</h1>
+      <div class="game-grid" id="gameGrid">
+        <!-- Cards serão inseridos aqui -->
+      </div>
     </div>
 
-    <iframe
-      id="gameFrame"
-      title="Jogo"
-      allowtransparency="true"
-      frameborder="0"
-      scrolling="no"
-      allowfullscreen
-      style="color-scheme: auto"
-    ></iframe>
+    <div id="game-view">
+      <button id="back-btn" class="btn">← Voltar</button>
+      <iframe
+        id="gameFrame"
+        title="Jogo"
+        allowtransparency="true"
+        frameborder="0"
+        scrolling="no"
+        allowfullscreen
+      ></iframe>
+    </div>
 
     <script>
-      const welcomeContainer = document.querySelector('.welcome-container');
-      const iframe = document.querySelector('#gameFrame');
-      const playButton = document.querySelector('.btn');
+      const games = [
+        {
+          id: '1172002412',
+          title: 'SPRUNKI (modded) retextured',
+          thumb: 'https://uploads.scratch.mit.edu/get_image/project/1172002412_480x360.png'
+        },
+        {
+          id: '1260865301',
+          title: 'sprunki definitive phase 12 (E.S.B 4768’s version) (V2)',
+          thumb: 'https://uploads.scratch.mit.edu/get_image/project/1260865301_480x360.png'
+        },
+        {
+          id: '1129445410',
+          title: 'Incredibox - Sprunki Retake FINAL UPDATE remix',
+          thumb: 'https://uploads.scratch.mit.edu/get_image/project/1129445410_480x360.png'
+        }
+      ];
 
-      function loadGame(gameId) {
-        iframe.src = `https://turbowarp.org/${gameId}/embed`;
+      const gameGrid = document.getElementById('gameGrid');
+      const gameView = document.getElementById('game-view');
+      const gameFrame = document.getElementById('gameFrame');
+      const backBtn = document.getElementById('back-btn');
+
+      function renderGames() {
+        gameGrid.innerHTML = games.map(game => `
+          <div class="game-card">
+            <img src="${game.thumb}" alt="${game.title}" class="game-thumb" onerror="this.src='https://via.placeholder.com/480x360?text=Sem+Imagem'">
+            <div class="game-info">
+              <div class="game-title">${game.title}</div>
+              <button class="btn" onclick="playGame('${game.id}')">Jogar</button>
+            </div>
+          </div>
+        `).join('');
       }
 
-      playButton.addEventListener('click', (event) => {
-        event.preventDefault();
-
-        if (!welcomeContainer || !iframe) return;
-
+      function playGame(gameId) {
+        gameFrame.src = `https://turbowarp.org/${gameId}/embed`;
         document.body.classList.add('is-playing');
+      }
 
-        const exampleGameId = '1172002412';
-        loadGame(exampleGameId);
-      });
+      function stopGame() {
+        gameFrame.src = '';
+        document.body.classList.remove('is-playing');
+      }
+
+      backBtn.addEventListener('click', stopGame);
+
+      // Inicializar
+      renderGames();
     </script>
   </body>
 </html>
