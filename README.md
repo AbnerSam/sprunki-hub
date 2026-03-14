@@ -1,77 +1,86 @@
-# Sprunki Hub 🎵
+# Sprunki Hub
 
-Catálogo interativo de jogos Sprunki - **Sem Anúncios**.
-Futuramente: PWA, **Funciona Offline**
+Launcher/catalogo web de jogos e mods do universo Sprunki.
 
-## O que é?
+O projeto existe para oferecer uma experiencia leve, sem anuncios invasivos e adequada para tablets antigos, usando a web como plataforma principal em vez de APKs pesados.
 
-Um um launcher/catálogo para diferentes versões e mods do Sprunki.
+## Estado atual
 
-- ✅ Sem anúncios invasivos do Unity/APK
-- ✅ Interface responsiva para tablets antigos
-- ✅ Extensível (adicione jogos editando `catalog.json`)
+- app estatico em `index.html`
+- catalogo em `catalog.json` na raiz
+- player via embed do TurboWarp
+- fluxo pensado para hospedagem no GitHub Pages
+- sem build step
+- sem testes automatizados
+- schema inicial de `catalog.json` definido
+- sem PWA/offline ainda
 
-## Estrutura do Projeto
+## Direcao do projeto
 
-``` fileTree
+O objetivo e evoluir o launcher nesta ordem:
+
+1. alinhar documentacao e escopo da v1
+2. consolidar `catalog.json` na raiz
+3. fechar o launcher estatico e responsivo
+4. publicar e validar a v1 no GitHub Pages
+
+## Documentacao principal
+
+- `AGENTS.md` - instrucao operacional viva para agents e sessoes futuras
+- `docs/PRD.md` - fonte de verdade do produto
+- `docs/ADR.md` - historico de decisoes ja tomadas
+- `docs/Relatório Técnico_ Ecossistema Sprunki e Estratégias de Implementação.md` - contexto tecnico sobre o ecossistema Sprunki e a motivacao web-first
+
+## Como funciona hoje
+
+- a tela inicial carrega o catalogo a partir de JSON e renderiza os cards de jogos/mods
+- ao clicar em `Jogar`, o site resolve a URL do player com base em `source.type`
+- o usuario pode voltar do player para a lista principal sem recarregar a pagina
+
+## Stack atual
+
+- HTML
+- CSS
+- JavaScript puro
+- TurboWarp embed
+
+## Principios do projeto
+
+- web-first e leve
+- sem anuncios invasivos
+- compativel com tablets antigos
+- GitHub Pages como hospedagem padrao do projeto
+- sem dependencia de servidor local de desenvolvimento como requisito de uso
+- sem frameworks sem necessidade clara
+
+## Hospedagem e validacao
+
+- o ambiente padrao do projeto e o GitHub Pages
+- alteracoes devem continuar compativeis com hospedagem estatica
+- a validacao principal deve considerar o comportamento publicado no GitHub Pages
+- servidor local pode ser usado apenas como apoio eventual, nunca como requisito do fluxo do projeto
+
+## Estrutura atual
+
+```text
 sprunki-hub/
-├── index.html              # Entry point principal
-└── README.md              # Este arquivo
-
-Nota: Array no index (única fonte)
-- Futuramente: **`public/catalog.json`**: será a única fonte de verdade para o catálogo de jogos.
+|- AGENTS.md
+|- README.md
+|- index.html
+|- docs/
+|  |- ADR.md
+|  |- PRD.md
+|  \- Relatório Técnico_ Ecossistema Sprunki e Estratégias de Implementação.md
+\- sb3Files/
 ```
 
-## Como Funciona?
+## Proximos marcos
 
-### 1. **Catálogo Dinâmico** - Futuramente: (`catalog.json`)
+- concluir o alinhamento documental da v1
+- validar `catalog.json` na raiz
+- ajustar `index.html` para consumir o catalogo na raiz
+- validar a publicacao no GitHub Pages
 
-Para adicionar novos jogos:
+## Licenca
 
-```js
-{
-  id: '1172002412',
-  title: 'SPRUNKI (modded) retextured',
-  thumb: 'https://uploads.scratch.mit.edu/get_image/project/1172002412_480x360.png'
-},
-{
-  id: '1260865301',
-  title: 'sprunki definitive phase 12 (E.S.B 4768’s version) (V2)',
-  thumb: 'https://uploads.scratch.mit.edu/get_image/project/1260865301_480x360.png'
-},
-{
-  id: '1129445410',
-  title: 'Incredibox - Sprunki Retake FINAL UPDATE remix',
-  thumb: 'https://uploads.scratch.mit.edu/get_image/project/1129445410_480x360.png'
-}
-```
-
-### 2. **Tipos de Source Suportados**
-
-#### `turbowarp` (Recomendado para Scratch)
-
-- Usa TurboWarp (compilador Scratch rápido)
-- URL: `https://turbowarp.org/{id}/embed`
-
-## Adicionando Novos Jogos
-
-### Opção A: Projeto existente no Scratch
-
-1. Encontre o ID do projeto no Scratch (URL: `scratch.mit.edu/projects/{ID}`)
-
-### Opção B: Arquivo sb3
-
-## Roadmap
-
-- [ ] Implementação de sb3
-- [ ] Suporte à salvar jogos de fontes como sb3 para ter biblioteca própria
-- [ ] Suporte PWA
-- [ ] Suporte a busca dinâmica
-- [ ] Favoritos/biblioteca pessoal
-- [ ] Sync com conta do usuário
-- [ ] Estatísticas de gameplay
-- [ ] Temas (dark/light mode)
-
-## Licença
-
-Este projeto é para fins educacionais. Respeite as licenças dos jogos/mods que você adiciona ao catálogo.
+Projeto com fins educacionais. Respeite as licencas e creditos dos jogos/mods adicionados ao catalogo.

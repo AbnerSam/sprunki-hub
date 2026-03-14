@@ -26,6 +26,11 @@
         min-height: 100vh;
       }
 
+      .main-content {
+        width: 100%;
+        max-width: 1200px;
+      }
+
       /* Responsividade básica para o container */
       @media (max-width: 600px) {
         body {
@@ -42,12 +47,32 @@
         margin-bottom: 30px;
       }
 
-      .game-grid {
-        display: flex;
-        gap: 20px;
+      .catalog-status {
         width: 100%;
         max-width: 1200px;
-        flex-direction: row;
+        margin-bottom: 20px;
+        padding: 14px 16px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: var(--shadow);
+        color: var(--text);
+      }
+
+      .catalog-status[hidden] {
+        display: none;
+      }
+
+      .catalog-status.is-error {
+        background: #fff0f0;
+        color: #8a1f1f;
+        border: 1px solid #f3b9b9;
+      }
+
+      .game-grid {
+        display: grid;
+        gap: 20px;
+        width: 100%;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         align-items: stretch;
       }
 
@@ -66,6 +91,7 @@
         transition: transform 0.2s, box-shadow 0.2s;
         display: flex;
         flex-direction: column;
+        min-width: 0;
       }
 
       .game-card:hover {
@@ -168,6 +194,7 @@
   <body>
     <div class="main-content">
       <h1>Sprunki Hub</h1>
+      <div id="catalogStatus" class="catalog-status">Carregando catalogo...</div>
       <div class="game-grid" id="gameGrid">
         <!-- Cards serão inseridos aqui -->
       </div>
@@ -186,43 +213,131 @@
     </div>
 
     <script>
-      const gamesList = [
-        {
-          id: '1172002412',
-          title: 'SPRUNKI (modded) retextured',
-          thumb: 'https://uploads.scratch.mit.edu/get_image/project/1172002412_480x360.png'
-        },
-        {
-          id: '1260865301',
-          title: 'sprunki definitive phase 12 (E.S.B 4768’s version) (V2)',
-          thumb: 'https://uploads.scratch.mit.edu/get_image/project/1260865301_480x360.png'
-        },
-        {
-          id: '1129445410',
-          title: 'Incredibox - Sprunki Retake FINAL UPDATE remix',
-          thumb: 'https://uploads.scratch.mit.edu/get_image/project/1129445410_480x360.png'
-        }
-      ];
-
       const gameGrid = document.getElementById('gameGrid');
-      const gameView = document.getElementById('game-view');
+      const catalogStatus = document.getElementById('catalogStatus');
       const gameFrame = document.getElementById('gameFrame');
       const backBtn = document.getElementById('back-btn');
+      let gamesList = [];
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function setStatus(message, isError = false) {
+        catalogStatus.textContent = message;
+        catalogStatus.hidden = false;
+        catalogStatus.classList.toggle('is-error', isError);
+      }
+
+      function clearStatus() {
+        catalogStatus.hidden = true;
+        catalogStatus.classList.remove('is-error');
+      }
+
+      function normalizeCatalogItem(item) {
+        if (!item || typeof item !== 'object') {
+          return null;
+        }
+
+        const hasCoreFields = item.id && item.title && item.thumb;
+        const sourceType = item.source && item.source.type;
+
+        if (!hasCoreFields || !sourceType) {
+          return null;
+        }
+
+        return {
+          id: String(item.id),
+          slug: item.slug ? String(item.slug) : String(item.id),
+          title: String(item.title),
+          thumb: String(item.thumb),
+          source: item.source,
+          tags: Array.isArray(item.tags) ? item.tags : []
+        };
+      }
+
+      function getFallbackThumb() {
+        return 'https://via.placeholder.com/480x360?text=Sem+Imagem';
+      }
 
       function renderGames() {
+        if (!gamesList.length) {
+          setStatus('Nenhum jogo disponivel no catalogo.', true);
+          gameGrid.innerHTML = '';
+          return;
+        }
+
+        clearStatus();
         gameGrid.innerHTML = gamesList.map(game => `
           <div class="game-card">
-            <img src="${game.thumb}" alt="${game.title}" class="game-thumb" onerror="this.src='https://via.placeholder.com/480x360?text=Sem+Imagem'">
+            <img src="${escapeHtml(game.thumb)}" alt="${escapeHtml(game.title)}" class="game-thumb" onerror="this.src='${getFallbackThumb()}'">
             <div class="game-info">
-              <div class="game-title">${game.title}</div>
-              <button class="btn" onclick="playGame('${game.id}')">Jogar</button>
+              <div class="game-title">${escapeHtml(game.title)}</div>
+              <button class="btn" onclick="playGame('${escapeHtml(game.id)}')">Jogar</button>
             </div>
           </div>
         `).join('');
       }
 
+      function resolveGameUrl(game) {
+        if (!game || !game.source || !game.source.type) {
+          return null;
+        }
+
+        switch (game.source.type) {
+          case 'turbowarp-project':
+            if (!game.source.projectId) {
+              return null;
+            }
+
+            return `https://turbowarp.org/${game.source.projectId}/embed`;
+          case 'sb3-file':
+            if (game.source.path) {
+              const sb3Path = encodeURIComponent(game.source.path);
+              return `https://turbowarp.org/player?project_url=${sb3Path}`;
+            }
+
+            if (game.source.url) {
+              const sb3Url = encodeURIComponent(game.source.url);
+              return `https://turbowarp.org/player?project_url=${sb3Url}`;
+            }
+
+            return null;
+          case 'external-url':
+            return game.source.url || null;
+          default:
+            return null;
+        }
+      }
+
+      function hideStatusWhilePlaying() {
+        if (!catalogStatus.classList.contains('is-error')) {
+          clearStatus();
+        }
+      }
+
       function playGame(gameId) {
-        gameFrame.src = `https://turbowarp.org/${gameId}/embed`;
+        const game = gamesList.find(item => item.id === gameId);
+
+        if (!game) {
+          setStatus('Nao foi possivel localizar este jogo no catalogo.', true);
+          return;
+        }
+
+        const gameUrl = resolveGameUrl(game);
+
+        if (!gameUrl) {
+          setStatus('Esta fonte ainda nao possui URL de execucao valida.', true);
+          return;
+        }
+
+        hideStatusWhilePlaying();
+        gameFrame.src = gameUrl;
         document.body.classList.add('is-playing');
       }
 
@@ -233,8 +348,29 @@
 
       backBtn.addEventListener('click', stopGame);
 
-      // Inicializar
-      renderGames();
+      async function loadCatalog() {
+        setStatus('Carregando catalogo...');
+
+        try {
+          const response = await fetch('./catalog.json', { cache: 'no-store' });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const catalog = await response.json();
+          const items = Array.isArray(catalog.items) ? catalog.items : [];
+
+          gamesList = items.map(normalizeCatalogItem).filter(Boolean);
+          renderGames();
+        } catch (error) {
+          gameGrid.innerHTML = '';
+          setStatus('Falha ao carregar `catalog.json`. O fluxo oficial do projeto considera hospedagem estatica, com GitHub Pages como ambiente padrao.', true);
+          console.error('Erro ao carregar catalogo:', error);
+        }
+      }
+
+      loadCatalog();
     </script>
   </body>
 </html>
