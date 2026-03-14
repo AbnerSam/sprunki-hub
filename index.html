@@ -186,7 +186,7 @@
     </div>
 
     <script>
-      const games = [
+      const gamesList = [
         {
           id: '1172002412',
           title: 'SPRUNKI (modded) retextured',
@@ -210,7 +210,7 @@
       const backBtn = document.getElementById('back-btn');
 
       function renderGames() {
-        gameGrid.innerHTML = games.map(game => `
+        gameGrid.innerHTML = gamesList.map(game => `
           <div class="game-card">
             <img src="${game.thumb}" alt="${game.title}" class="game-thumb" onerror="this.src='https://via.placeholder.com/480x360?text=Sem+Imagem'">
             <div class="game-info">
