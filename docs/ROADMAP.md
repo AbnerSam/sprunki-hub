@@ -2,9 +2,10 @@
 
 ## Status geral
 
-- Versao atual alvo: v1
+- Versao atual alvo: v1.1
 - Hospedagem oficial: GitHub Pages
-- Status da v1: em andamento
+- Status da v1: concluida
+- Status da v1.1: em andamento
 
 ## Objetivo da v1
 
@@ -18,46 +19,28 @@ Entregar um launcher web estatico, leve e responsivo para o catalogo Sprunki, co
 - catalogo carregando corretamente sem backend
 - fluxo simples de abrir jogo via TurboWarp e voltar para a lista
 
-## Fora da v1
+## Resultado da v1
 
-- busca
-- favoritos
-- PWA
-- suporte real a `.sb3`
-- download automatico de `.sb3`
-- offline
-- sync, conta, estatisticas e backend
+- v1 publicada e validada no GitHub Pages
+- criterios de pronto da v1 atendidos
 
-## Fases da v1
+## Historico de fases da v1
 
 ### Fase 1 - Alinhamento documental
 
 - Status: concluida
-- consolidar `README.md`, `AGENTS.md`, `docs/PRD.md` e `docs/ADR.md`
-- explicitar GitHub Pages como ambiente oficial
-- definir v1 enxuta e o que fica fora do escopo
 
 ### Fase 2 - Estrutura do catalogo
 
 - Status: concluida
-- mover `catalog.json` para a raiz
-- fechar schema minimo da v1
-- garantir que novos jogos sejam adicionados so editando JSON
 
 ### Fase 3 - Launcher v1
 
 - Status: concluida
-- ajustar `index.html` para consumir `catalog.json` na raiz
-- garantir layout responsivo
-- manter navegacao simples entre lista e player
-- tratar estados basicos de erro e vazio
 
 ### Fase 4 - Publicacao da v1
 
-- Status: pendente
-- validar no GitHub Pages
-- revisar consistencia visual e textual
-- fechar criterios de pronto da v1
+- Status: concluida
 
 ## Definicao de pronto da v1
 
@@ -73,17 +56,25 @@ Entregar um launcher web estatico, leve e responsivo para o catalogo Sprunki, co
 
 ### v1.1
 
-- busca
-- refinamentos visuais
-- melhorias de usabilidade
-
-### v1.2
-
-- favoritos locais
+- suporte real a `.sb3`
+- sem perder compatibilidade com GitHub Pages
 
 ### v2
 
-- suporte real a `.sb3`
-- download automatico
+- busca
+- refinamentos visuais
+- melhorias de usabilidade
+- favoritos locais
+
+### v2.1
+
+- download/inclusão do `.sb3` automatico de objetos/itens/jogos adicionados ao catalog.json.
+
+### v2.2
+
 - PWA
 - offline
+
+### v3
+
+Interface Admin para adicionar jogos de modo facilitado.

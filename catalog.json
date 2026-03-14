@@ -33,6 +33,28 @@
         "projectId": "1129445410"
       },
       "tags": ["sprunki", "scratch", "remix"]
+    },
+    {
+      "id": "local-sb3-human-edition",
+      "slug": "incredibox-sprunki-human-edition-final-update-local",
+      "title": "Incredibox Sprunki Human Edition (SB3 Local)",
+      "thumb": "https://via.placeholder.com/480x360?text=SB3+Local",
+      "source": {
+        "type": "sb3-file",
+        "path": "public/sb3-files/incredibox-sprunki-human-edition-final-update.sb3"
+      },
+      "tags": ["sprunki", "sb3", "local"]
+    },
+    {
+      "id": "remote-sb3-example",
+      "slug": "turbowarp-example-sb3-remote",
+      "title": "TurboWarp Example (SB3 Remoto)",
+      "thumb": "https://via.placeholder.com/480x360?text=SB3+Remoto",
+      "source": {
+        "type": "sb3-file",
+        "url": "https://packager.turbowarp.org/example.sb3"
+      },
+      "tags": ["sprunki", "sb3", "remote"]
     }
   ]
 }

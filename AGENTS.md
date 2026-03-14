@@ -13,8 +13,10 @@ Leia nesta ordem ao iniciar uma sessao:
 1. `README.md`
 2. `docs/PRD.md`
 3. `docs/ADR.md`
-4. `index.html`
-5. `docs/Relatório Técnico_ Ecossistema Sprunki e Estratégias de Implementação.md`
+4. `docs/ROADMAP.md`
+5. `docs/TASKS.md`
+6. `index.html`
+7. `docs/Relatório Técnico_ Ecossistema Sprunki e Estratégias de Implementação.md`
 
 Se houver divergencia entre documentos, siga esta prioridade:
 
@@ -27,6 +29,7 @@ Se houver divergencia entre documentos, siga esta prioridade:
 - App estatico com catalogo em `catalog.json`
 - Player via iframe do TurboWarp
 - Hospedagem-alvo em GitHub Pages
+- v1 concluida e validada em ambiente publicado
 - Sem build step
 - Sem testes automatizados
 - Com schema inicial de `catalog.json` ja definido
@@ -37,10 +40,10 @@ Se houver divergencia entre documentos, siga esta prioridade:
 
 Priorizar a evolucao do projeto nesta sequencia:
 
-1. Alinhamento documental da v1
-2. Fechar o schema e o uso de `catalog.json` na raiz do projeto
-3. Fechar `index.html` estatico e responsivo
-4. Validar e publicar a v1 no GitHub Pages
+1. Manter estabilidade e coerencia documental da v1
+2. Planejar e implementar v1.1 com suporte real a `.sb3`, sem perder compatibilidade com GitHub Pages
+3. Preparar backlog detalhado da v2
+4. Avancar para download automatico de `.sb3`, PWA e offline nas fases seguintes
 
 ## Convencoes de trabalho
 
@@ -52,12 +55,19 @@ Priorizar a evolucao do projeto nesta sequencia:
 - Preserve compatibilidade com GitHub Pages como ambiente padrao de deploy
 - Nao trate servidor local de desenvolvimento como requisito do projeto
 - Trate `catalog.json` na raiz como fonte de verdade da v1
+- Use `docs/ROADMAP.md` apenas para definicoes macro por versao/fase
+- Use `docs/TASKS.md` para rastrear microtasks da versao ativa
+- Ao concluir a ultima task ativa de `docs/TASKS.md`, encerre a versao e limpe o arquivo
+- Ao encerrar a versao, mantenha apenas as instrucoes do arquivo e um registro curto de encerramento da versao concluida
+- Ao iniciar uma nova versao, remova o encerramento anterior e deixe apenas instrucoes + status atual + tasks da versao nova
+- As tasks da versao seguinte so devem ser adicionadas quando a nova versao for oficialmente iniciada
+- Nao manter backlog de qualquer tipo, ideias futuras ou tasks de versoes nao iniciadas em `docs/TASKS.md`
 - Ao tomar uma decisao arquitetural relevante, registre em `docs/ADR.md`
 - Ao mudar escopo, requisitos ou definicao de pronto, atualize `docs/PRD.md`
 
 ## Como validar mudancas
 
-- Para mudancas estaticas simples, valide abrindo `index.html` no navegador
+- Para mudancas estaticas simples, valide preferencialmente em ambiente publicado no GitHub Pages
 - Para fluxos do catalogo, priorize validacao em ambiente publicado no GitHub Pages, conferindo renderizacao dos cards, carregamento do player e retorno da tela de jogo
 - Servidor local pode ser usado apenas como apoio temporario, nunca como dependencia do fluxo oficial
 - Para recursos offline/PWA, validar instalacao, cache e comportamento sem rede

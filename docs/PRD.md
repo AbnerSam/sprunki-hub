@@ -6,6 +6,7 @@ Sprunki Hub e um launcher/catalogo web para reunir diferentes versoes e mods de 
 O produto deve funcionar bem em tablets antigos e navegadores moveis, priorizando rapidez, simplicidade e expansao progressiva.
 
 Para a v1, o foco e propositalmente enxuto: documentacao coerente, `catalog.json` na raiz, `index.html` estatico e responsivo e fluxo basico de abrir jogos via TurboWarp em GitHub Pages.
+Com a v1 concluida, a iteracao ativa passa a ser a v1.1, acompanhada em `docs/ROADMAP.md` (macro) e `docs/TASKS.md` (microtasks).
 
 ## Problema
 
@@ -163,6 +164,14 @@ Na v1, `catalog.json` sera mantido na raiz do projeto e tera um objeto raiz simp
 - `sb3-file`: aponta para arquivo `.sb3` local ou remoto
 - `external-url`: reserva para compatibilidade futura com fontes externas controladas
 
+### Regras de resolucao para `sb3-file` (v1.1)
+
+- `source.path` deve apontar para caminho local/relativo do `.sb3` dentro do site
+- `source.path` sera resolvido para URL absoluta com base na URL atual da pagina
+- `source.url` deve apontar para URL remota direta do `.sb3` usando `https` e CORS
+- quando `source.path` e `source.url` coexistirem no mesmo item, `source.path` tem prioridade
+- o launcher deve enviar a URL final resolvida para o TurboWarp via parametro `project_url`
+
 ### Regras de modelagem
 
 - o schema deve preservar compatibilidade com o hardcode atual de `id`, `title` e `thumb`
@@ -181,10 +190,18 @@ O projeto sera considerado pronto em sua primeira versao robusta quando atender 
 - documentacao coerente entre `README.md`, `AGENTS.md`, `docs/PRD.md` e `docs/ADR.md`
 - publicacao compativel com GitHub Pages
 
+## Status da release
+
+- v1: concluida
+- ambiente de validacao oficial: GitHub Pages
+- v1.1: em andamento
+- proximas iteracoes: definidas no `docs/ROADMAP.md`
+
 ## Roadmap por fases
 
 ### Fase 1 - Base documental e alinhamento
 
+- Status: concluida
 - Consolidar PRD, ADR e guia operacional
 - Revisar README para refletir a estrategia atual
 - Explicitar GitHub Pages como ambiente oficial
@@ -192,12 +209,14 @@ O projeto sera considerado pronto em sua primeira versao robusta quando atender 
 
 ### Fase 2 - MVP estruturado
 
+- Status: concluida
 - Mover `catalog.json` para a raiz
 - Fechar schema minimo da v1
 - Garantir que novos jogos sejam adicionados so editando JSON
 
 ### Fase 3 - Catalogo dinamico
 
+- Status: concluida
 - Ajustar `index.html` para consumir `catalog.json` na raiz
 - Garantir layout responsivo
 - Manter navegacao simples entre lista e player
@@ -205,6 +224,7 @@ O projeto sera considerado pronto em sua primeira versao robusta quando atender 
 
 ### Fase 4 - Publicacao da v1
 
+- Status: concluida
 - Validar no GitHub Pages
 - Revisar consistencia visual e textual
 - Fechar criterios de pronto da v1

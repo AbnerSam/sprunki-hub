@@ -204,3 +204,84 @@ Ficam explicitamente fora da v1:
 - a v1 prioriza entrega rapida e previsivel
 - funcionalidades avancadas passam para roadmap pos-v1
 - a documentacao deve refletir esse corte de escopo de forma explicita
+
+---
+
+## ADR-009 - Definir escopo da v1.1 com suporte real a `.sb3` preservando GitHub Pages
+
+- Status: aceito
+
+### Contexto
+
+Com a v1 concluida, o proximo passo e habilitar suporte real a `.sb3`. Ao mesmo tempo, o projeto precisa manter as restricoes da arquitetura atual: hospedagem estatica, sem backend obrigatorio e compatibilidade integral com GitHub Pages.
+
+### Decisao
+
+Definir a v1.1 com foco em suporte real a `.sb3` via `source.path` e `source.url`, mantendo o fluxo principal do launcher e sem introduzir dependencia de servidor backend.
+
+Definir como inegociavel que toda implementacao da v1.1 continue compativel com GitHub Pages como ambiente oficial de publicacao e validacao.
+
+### Consequencias
+
+- a v1.1 avanca capacidade funcional do catalogo sem mudar o modelo de deploy
+- implementacoes que exijam backend ficam fora da v1.1
+- download automatico, PWA e offline continuam para fases posteriores
+- a documentacao operacional passa a usar `docs/ROADMAP.md` para macro e `docs/TASKS.md` para microtasks
+
+---
+
+## ADR-010 - Separar roadmap macro e tasks micro por versao
+
+- Status: aceito
+
+### Contexto
+
+Havia mistura entre planejamento de release e rastreamento de tarefas operacionais, o que dificulta manutencao e gera retrabalho entre sessoes.
+
+### Decisao
+
+Definir o seguinte modelo documental:
+
+- `docs/ROADMAP.md` para definicoes macro por versao/fase
+- `docs/TASKS.md` para microtasks da versao ativa
+
+Ao concluir a ultima task ativa de uma versao, `docs/TASKS.md` deve ser limpo, mantendo apenas as instrucoes do arquivo e um registro curto de encerramento da versao concluida.
+
+Ao iniciar uma nova versao, o encerramento anterior deve ser removido e o arquivo deve conter apenas instrucoes + status atual + tasks da versao nova.
+
+As tasks da versao seguinte so devem ser adicionadas quando a nova versao for oficialmente iniciada.
+
+Nao deve haver backlog, ideias futuras ou tasks de versoes nao iniciadas em `docs/TASKS.md`.
+
+### Consequencias
+
+- melhor visibilidade de progresso por nivel (macro e micro)
+- menos ruido historico em tasks operacionais
+- onboarding mais rapido para novos agents/sessoes
+
+---
+
+## ADR-011 - Padronizar resolucao de `sb3-file` para `source.path` e `source.url`
+
+- Status: aceito
+
+### Contexto
+
+A v1.1 introduz suporte real a `.sb3` sem backend, mantendo compatibilidade total com GitHub Pages.
+Para evitar ambiguidade na montagem da URL do player e reduzir erros de catalogo, era necessario definir regras unicas para `source.path` e `source.url` em itens com `source.type = sb3-file`.
+
+### Decisao
+
+Para itens `sb3-file`, o launcher deve seguir as regras abaixo:
+
+- `source.path` representa caminho local/relativo do arquivo `.sb3`, versionado junto ao site
+- `source.path` deve ser resolvido para URL absoluta com base na URL atual da pagina antes de enviar ao TurboWarp via `project_url`
+- `source.url` representa URL remota direta para o arquivo `.sb3`, com `https` e CORS habilitado
+- quando `source.path` e `source.url` existirem ao mesmo tempo, `source.path` tem prioridade
+- o valor efetivo resolvido (de `path` ou `url`) e sempre enviado para o player TurboWarp no parametro `project_url`
+
+### Consequencias
+
+- o catalogo ganha padrao claro para fontes locais e remotas de `.sb3`
+- reduz falhas de execucao por caminhos relativos mal resolvidos em ambiente publicado
+- mantem o projeto compativel com GitHub Pages e sem dependencia de backend

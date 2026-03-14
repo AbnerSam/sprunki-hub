@@ -6,31 +6,34 @@
 - `ROADMAP.md` continua sendo o plano macro por fase e versao
 - cada task deve ter status explicito: `todo`, `doing`, `done`, `blocked`
 - ao concluir uma task relevante, atualizar este arquivo na mesma sessao
+- ao concluir a ultima task ativa da versao, encerrar a versao e limpar este arquivo
+- ao encerrar a versao, manter apenas instruções + 1 linha curta de encerramento da versão finalizada
+- ao iniciar nova versao remover o encerramento anterior e deixar apenas instruções + status atual + tasks da versão nova
+- as tasks da versao seguinte so entram quando a nova versao for oficialmente iniciada
+- nao manter backlog de qualquer tipo, ideias futuras ou tasks de versoes nao iniciadas neste arquivo
 
-## Fase 1 - Alinhamento documental
+## Status atual
 
-- `done` consolidar `README.md`, `AGENTS.md`, `docs/PRD.md` e `docs/ADR.md`
-- `done` explicitar GitHub Pages como ambiente oficial de hospedagem e validacao
-- `done` definir a v1 enxuta e registrar o que fica fora do escopo
-- `done` registrar a decisao de escopo da v1 em `docs/ADR.md`
-- `done` criar `docs/ROADMAP.md` para separar roadmap macro de documentacao de produto
+- v1.1 iniciada
 
-## Fase 2 - Estrutura do catalogo
+## v1.1 - Suporte real a `.sb3`
 
-- `done` mover `public/catalog.json` para `catalog.json` na raiz do projeto
-- `done` atualizar referencias documentais de `public/catalog.json` para `catalog.json`
-- `done` validar o schema minimo da v1 com o arquivo na raiz
-- `done` garantir que adicionar novos jogos exija apenas editar `catalog.json`
+### Fase 1 - Planejamento tecnico
 
-## Fase 3 - Launcher v1
+- `done` revisar schema atual de `sb3-file` no `catalog.json`
+- `done` definir formato final de resolucao para `source.path` e `source.url`
+- `done` registrar decisao no `docs/ADR.md` se houver ajuste arquitetural
 
-- `done` ajustar `index.html` para consumir `./catalog.json`
-- `done` revisar layout responsivo em desktop e tablet/mobile
-- `done` revisar fluxo de abrir jogo e voltar para a lista
-- `done` revisar estados basicos de carregamento, vazio e erro
+### Fase 2 - Implementacao
 
-## Fase 4 - Publicacao da v1
+- `done` ajustar o player para abrir `.sb3` local via `source.path`
+- `done` ajustar o player para abrir `.sb3` remoto via `source.url`
+- `done` melhorar mensagens de erro para itens `.sb3` invalidos
+- `done` incluir itens reais de teste `.sb3` no `catalog.json`
 
-- `todo` validar o fluxo final no GitHub Pages
-- `todo` revisar consistencia visual e textual da home e do player
-- `todo` confirmar criterios de pronto da v1
+### Fase 3 - Validacao publicada
+
+- `todo` publicar no GitHub Pages
+- `todo` validar `sb3-file` com `source.path`
+- `todo` validar `sb3-file` com `source.url`
+- `todo` validar ausencia de regressao em `turbowarp-project`

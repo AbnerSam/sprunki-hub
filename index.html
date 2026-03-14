@@ -284,34 +284,76 @@
         `).join('');
       }
 
-      function resolveGameUrl(game) {
+      function isSb3Reference(reference) {
+        return /\.sb3([?#].*)?$/i.test(reference);
+      }
+
+      function resolveSb3ProjectUrl(source) {
+        if (!source || typeof source !== 'object') {
+          return { error: 'Item .sb3 invalido no catalogo.' };
+        }
+
+        const rawPath = typeof source.path === 'string' ? source.path.trim() : '';
+        const rawUrl = typeof source.url === 'string' ? source.url.trim() : '';
+
+        if (!rawPath && !rawUrl) {
+          return { error: 'Item .sb3 sem `source.path` ou `source.url`.' };
+        }
+
+        const selectedReference = rawPath || rawUrl;
+
+        if (!isSb3Reference(selectedReference)) {
+          return { error: 'Item .sb3 deve apontar para arquivo com extensao `.sb3`.' };
+        }
+
+        try {
+          const resolvedUrl = rawPath
+            ? new URL(rawPath, window.location.href)
+            : new URL(rawUrl);
+
+          if (!rawPath && resolvedUrl.protocol !== 'https:') {
+            return { error: 'URL remota de `.sb3` deve usar `https`.' };
+          }
+
+          return { projectUrl: resolvedUrl.toString() };
+        } catch (error) {
+          return { error: 'Item .sb3 com caminho/URL invalido.' };
+        }
+      }
+
+      function resolveGameLaunch(game) {
         if (!game || !game.source || !game.source.type) {
-          return null;
+          return { error: 'Item invalido no catalogo.' };
         }
 
         switch (game.source.type) {
           case 'turbowarp-project':
             if (!game.source.projectId) {
-              return null;
+              return { error: 'Item TurboWarp sem `source.projectId`.' };
             }
 
-            return `https://turbowarp.org/${game.source.projectId}/embed`;
-          case 'sb3-file':
-            if (game.source.path) {
-              const sb3Path = encodeURIComponent(game.source.path);
-              return `https://turbowarp.org/player?project_url=${sb3Path}`;
+            return {
+              url: `https://turbowarp.org/${game.source.projectId}/embed`
+            };
+          case 'sb3-file': {
+            const sb3Result = resolveSb3ProjectUrl(game.source);
+
+            if (!sb3Result.projectUrl) {
+              return { error: sb3Result.error || 'Falha ao resolver item `.sb3`.' };
             }
 
-            if (game.source.url) {
-              const sb3Url = encodeURIComponent(game.source.url);
-              return `https://turbowarp.org/player?project_url=${sb3Url}`;
-            }
-
-            return null;
+            return {
+              url: `https://turbowarp.org/embed?project_url=${encodeURIComponent(sb3Result.projectUrl)}`
+            };
+          }
           case 'external-url':
-            return game.source.url || null;
+            if (!game.source.url) {
+              return { error: 'Item externo sem `source.url`.' };
+            }
+
+            return { url: game.source.url };
           default:
-            return null;
+            return { error: 'Tipo de fonte ainda nao suportado.' };
         }
       }
 
@@ -329,15 +371,15 @@
           return;
         }
 
-        const gameUrl = resolveGameUrl(game);
+        const launch = resolveGameLaunch(game);
 
-        if (!gameUrl) {
-          setStatus('Esta fonte ainda nao possui URL de execucao valida.', true);
+        if (!launch.url) {
+          setStatus(launch.error || 'Esta fonte ainda nao possui URL de execucao valida.', true);
           return;
         }
 
         hideStatusWhilePlaying();
-        gameFrame.src = gameUrl;
+        gameFrame.src = launch.url;
         document.body.classList.add('is-playing');
       }
 

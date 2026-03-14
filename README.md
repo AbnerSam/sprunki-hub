@@ -4,31 +4,36 @@ Launcher/catalogo web de jogos e mods do universo Sprunki.
 
 O projeto existe para oferecer uma experiencia leve, sem anuncios invasivos e adequada para tablets antigos, usando a web como plataforma principal em vez de APKs pesados.
 
+URL público atual=<https://abnersam.github.io/sprunki-hub/>
+
 ## Estado atual
 
 - app estatico em `index.html`
 - catalogo em `catalog.json` na raiz
 - player via embed do TurboWarp
 - fluxo pensado para hospedagem no GitHub Pages
+- v1 concluida e validada em ambiente publicado
 - sem build step
 - sem testes automatizados
 - schema inicial de `catalog.json` definido
 - sem PWA/offline ainda
 
-## Direcao do projeto
+## Direcao atual
 
-O objetivo e evoluir o launcher nesta ordem:
+Com a v1 concluida, os proximos incrementos estao no roadmap pos-v1:
 
-1. alinhar documentacao e escopo da v1
-2. consolidar `catalog.json` na raiz
-3. fechar o launcher estatico e responsivo
-4. publicar e validar a v1 no GitHub Pages
+1. v1.1: suporte real a `.sb3`
+2. v2: busca, refinamentos visuais, usabilidade e favoritos locais
+3. v2.1: download automatico de `.sb3`
+4. v2.2: PWA e offline
 
 ## Documentacao principal
 
 - `AGENTS.md` - instrucao operacional viva para agents e sessoes futuras
 - `docs/PRD.md` - fonte de verdade do produto
 - `docs/ADR.md` - historico de decisoes ja tomadas
+- `docs/ROADMAP.md` - definicoes macro por versao/fase
+- `docs/TASKS.md` - rastreamento de microtasks da versao ativa
 - `docs/Relatório Técnico_ Ecossistema Sprunki e Estratégias de Implementação.md` - contexto tecnico sobre o ecossistema Sprunki e a motivacao web-first
 
 ## Como funciona hoje
@@ -64,22 +69,24 @@ O objetivo e evoluir o launcher nesta ordem:
 
 ```text
 sprunki-hub/
+|- catalog.json
 |- AGENTS.md
 |- README.md
 |- index.html
 |- docs/
 |  |- ADR.md
 |  |- PRD.md
+|  |- ROADMAP.md
+|  |- TASKS.md
 |  \- Relatório Técnico_ Ecossistema Sprunki e Estratégias de Implementação.md
-\- sb3Files/
+\- sb3-files/
 ```
 
 ## Proximos marcos
 
-- concluir o alinhamento documental da v1
-- validar `catalog.json` na raiz
-- ajustar `index.html` para consumir o catalogo na raiz
-- validar a publicacao no GitHub Pages
+- executar as tasks da v1.1 em `docs/TASKS.md`
+- preparar backlog detalhado da v2
+- manter consistencia de docs a cada fase concluida
 
 ## Licenca
 
