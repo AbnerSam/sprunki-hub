@@ -24,8 +24,9 @@ Com a v1 concluida, os proximos incrementos estao no roadmap pos-v1:
 
 1. v1.1: suporte real a `.sb3`
 2. v2: busca, refinamentos visuais, usabilidade e favoritos locais
-3. v2.1: download automatico de `.sb3`
-4. v2.2: PWA e offline
+3. v2.1: suporte futuro a `cocrea-gandi`
+4. v2.2: download automatico de `.sb3`
+5. v2.3: PWA e offline
 
 ## Documentacao principal
 
@@ -39,7 +40,7 @@ Com a v1 concluida, os proximos incrementos estao no roadmap pos-v1:
 ## Como funciona hoje
 
 - a tela inicial carrega o catalogo a partir de JSON e renderiza os cards de jogos/mods
-- ao clicar em `Jogar`, o site resolve a URL do player com base em `source.type`
+- ao clicar em `Jogar`, o site resolve a URL do player com base em `source.type` (`turbowarp-project`, `scratch-mit-edu`, `sb3-file` ou tipos futuros)
 - o usuario pode voltar do player para a lista principal sem recarregar a pagina
 
 ## Stack atual
@@ -64,6 +65,7 @@ Com a v1 concluida, os proximos incrementos estao no roadmap pos-v1:
 - alteracoes devem continuar compativeis com hospedagem estatica
 - a validacao principal deve considerar o comportamento publicado no GitHub Pages
 - servidor local pode ser usado apenas como apoio eventual, nunca como requisito do fluxo do projeto
+- para `sb3-file`, servidores locais simples podem falhar por CORS quando o TurboWarp embed tenta buscar `project_url`; GitHub Pages e a referencia principal para essa validacao
 
 ## Estrutura atual
 
@@ -79,8 +81,21 @@ sprunki-hub/
 |  |- ROADMAP.md
 |  |- TASKS.md
 |  \- Relatório Técnico_ Ecossistema Sprunki e Estratégias de Implementação.md
-\- sb3-files/
+\- public/
+   \- sb3-files/
+      |- scratch/
+      |- turbowarp/
+      \- cocrea-gandi/
 ```
+
+## Convencao atual para arquivos `.sb3`
+
+- `public/sb3-files/scratch/` e reservado para arquivos `.sb3` exportados/originados do Scratch e executados no launcher pelo fluxo `sb3-file` via TurboWarp
+- `public/sb3-files/turbowarp/` e reservado para arquivos `.sb3` compativeis com execucao via TurboWarp
+- `public/sb3-files/cocrea-gandi/` e reservado para arquivos `.sb3` que dependem de runtime/extensoes do ecossistema Gandi/Cocrea
+- arquivos em `cocrea-gandi/` nao devem ser cadastrados como `sb3-file` ate existir suporte real ao tipo `cocrea-gandi`
+- arquivos em `scratch/` podem entrar no `catalog.json` como `sb3-file` quando forem compativeis com execucao no TurboWarp
+- o `catalog.json` pode permanecer sem itens de teste `.sb3` enquanto nao houver um arquivo compativel em `public/sb3-files/turbowarp/` ou `public/sb3-files/scratch/`
 
 ## Proximos marcos
 

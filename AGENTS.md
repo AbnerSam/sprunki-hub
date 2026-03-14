@@ -43,7 +43,7 @@ Priorizar a evolucao do projeto nesta sequencia:
 1. Manter estabilidade e coerencia documental da v1
 2. Planejar e implementar v1.1 com suporte real a `.sb3`, sem perder compatibilidade com GitHub Pages
 3. Preparar backlog detalhado da v2
-4. Avancar para download automatico de `.sb3`, PWA e offline nas fases seguintes
+4. Avancar para suporte futuro a `cocrea-gandi`, depois download automatico de `.sb3`, PWA e offline nas fases seguintes
 
 ## Convencoes de trabalho
 
@@ -55,6 +55,9 @@ Priorizar a evolucao do projeto nesta sequencia:
 - Preserve compatibilidade com GitHub Pages como ambiente padrao de deploy
 - Nao trate servidor local de desenvolvimento como requisito do projeto
 - Trate `catalog.json` na raiz como fonte de verdade da v1
+- Trate `public/sb3-files/scratch/` como area de `.sb3` exportados/originados do Scratch e executados via `sb3-file` no TurboWarp
+- Trate `public/sb3-files/turbowarp/` como area de `.sb3` compativeis com TurboWarp
+- Trate `public/sb3-files/cocrea-gandi/` como area de `.sb3` dependentes de runtime Gandi/Cocrea
 - Use `docs/ROADMAP.md` apenas para definicoes macro por versao/fase
 - Use `docs/TASKS.md` para rastrear microtasks da versao ativa
 - Ao concluir a ultima task ativa de `docs/TASKS.md`, encerre a versao e limpe o arquivo
@@ -70,6 +73,7 @@ Priorizar a evolucao do projeto nesta sequencia:
 - Para mudancas estaticas simples, valide preferencialmente em ambiente publicado no GitHub Pages
 - Para fluxos do catalogo, priorize validacao em ambiente publicado no GitHub Pages, conferindo renderizacao dos cards, carregamento do player e retorno da tela de jogo
 - Servidor local pode ser usado apenas como apoio temporario, nunca como dependencia do fluxo oficial
+- Para `sb3-file`, considere que servidores locais simples podem falhar por CORS ao servir o `project_url` para o TurboWarp embed; valide preferencialmente no GitHub Pages
 - Para recursos offline/PWA, validar instalacao, cache e comportamento sem rede
 - Se algum comando novo de validacao surgir no projeto, documente aqui
 

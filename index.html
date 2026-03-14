@@ -335,6 +335,14 @@
             return {
               url: `https://turbowarp.org/${game.source.projectId}/embed`
             };
+          case 'scratch-mit-edu':
+            if (!game.source.projectId) {
+              return { error: 'Item Scratch sem `source.projectId`.' };
+            }
+
+            return {
+              url: `https://scratch.mit.edu/projects/${game.source.projectId}/embed`
+            };
           case 'sb3-file': {
             const sb3Result = resolveSb3ProjectUrl(game.source);
 

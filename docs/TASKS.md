@@ -30,6 +30,7 @@
 - `done` ajustar o player para abrir `.sb3` remoto via `source.url`
 - `done` melhorar mensagens de erro para itens `.sb3` invalidos
 - `done` incluir itens reais de teste `.sb3` no `catalog.json`
+- `done` suportar `scratch-mit-edu` para embed direto do Scratch
 
 ### Fase 3 - Validacao publicada
 
@@ -37,3 +38,4 @@
 - `todo` validar `sb3-file` com `source.path`
 - `todo` validar `sb3-file` com `source.url`
 - `todo` validar ausencia de regressao em `turbowarp-project`
+- `todo` validar ausencia de regressao em `scratch-mit-edu`

@@ -35,26 +35,15 @@
       "tags": ["sprunki", "scratch", "remix"]
     },
     {
-      "id": "local-sb3-human-edition",
-      "slug": "incredibox-sprunki-human-edition-final-update-local",
-      "title": "Incredibox Sprunki Human Edition (SB3 Local)",
-      "thumb": "https://via.placeholder.com/480x360?text=SB3+Local",
+      "id": "sprunke-definitive-phase-8-old-fake-alive-local",
+      "slug": "sprunke-definitive-phase-8-old-fake-alive",
+      "title": "Sprunke Definitive phase 8 old_fake alive",
+      "thumb": "https://via.placeholder.com/480x360?text=SB3+Scratch",
       "source": {
         "type": "sb3-file",
-        "path": "public/sb3-files/incredibox-sprunki-human-edition-final-update.sb3"
+        "path": "public/sb3-files/scratch/sprunke-definitive-phase-8-old-fake-alive.sb3"
       },
-      "tags": ["sprunki", "sb3", "local"]
-    },
-    {
-      "id": "remote-sb3-example",
-      "slug": "turbowarp-example-sb3-remote",
-      "title": "TurboWarp Example (SB3 Remoto)",
-      "thumb": "https://via.placeholder.com/480x360?text=SB3+Remoto",
-      "source": {
-        "type": "sb3-file",
-        "url": "https://packager.turbowarp.org/example.sb3"
-      },
-      "tags": ["sprunki", "sb3", "remote"]
+      "tags": ["sprunki", "scratch", "sb3", "local"]
     }
   ]
 }

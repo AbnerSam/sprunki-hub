@@ -68,9 +68,14 @@ Entregar um launcher web estatico, leve e responsivo para o catalogo Sprunki, co
 
 ### v2.1
 
-- download/inclusão do `.sb3` automatico de objetos/itens/jogos adicionados ao catalog.json.
+- suporte a `cocrea-gandi`
+- definicao de modelagem e embed para runtime Gandi/Cocrea
 
 ### v2.2
+
+- download/inclusão do `.sb3` automatico de objetos/itens/jogos adicionados ao catalog.json.
+
+### v2.3
 
 - PWA
 - offline

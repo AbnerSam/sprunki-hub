@@ -41,7 +41,7 @@ Para o publico deste projeto, isso piora desempenho, experiencia de uso e confia
 - Pagina unica em `index.html`
 - Lista de jogos definida em `catalog.json` na raiz do projeto
 - Cards com thumbnail, titulo e CTA para abrir o jogo
-- Abertura do jogo por resolucao de `source.type`, com suporte atual a `turbowarp-project`
+- Abertura do jogo por resolucao de `source.type`, com suporte atual a `turbowarp-project`, `scratch-mit-edu` e `sb3-file`
 - Retorno do modo jogo para a lista principal
 
 ## Escopo alvo
@@ -154,6 +154,7 @@ Na v1, `catalog.json` sera mantido na raiz do projeto e tera um objeto raiz simp
 - `source.projectId`: ID do projeto quando a origem for TurboWarp/Scratch
 - `source.path`: caminho local de arquivo, pensado para `.sb3`
 - `source.url`: URL remota quando a origem nao for local
+- `source.projectUrl`: URL publica do projeto quando a origem depender de runtime externo publicado
 - `tags`: marcadores simples para busca e filtros futuros
 - `description`: texto curto opcional para detalhes futuros
 - `featured`: destaque eventual na home
@@ -161,8 +162,24 @@ Na v1, `catalog.json` sera mantido na raiz do projeto e tera um objeto raiz simp
 ### Tipos de `source.type` previstos
 
 - `turbowarp-project`: abre via projeto identificado por ID
+- `scratch-mit-edu`: abre via embed direto de projeto publicado no Scratch
 - `sb3-file`: aponta para arquivo `.sb3` local ou remoto
+- `cocrea-gandi`: reserva para projetos publicados em runtime Gandi/Cocrea via embed externo
 - `external-url`: reserva para compatibilidade futura com fontes externas controladas
+
+### Regras de resolucao para `scratch-mit-edu`
+
+- `scratch-mit-edu` usa `source.projectId` como identificador do projeto publicado no Scratch
+- o launcher deve abrir esse tipo via embed oficial de `https://scratch.mit.edu/projects/{projectId}/embed`
+- esse tipo e indicado quando o catalogo precisa apontar explicitamente para o player oficial do Scratch, sem passar pelo runtime do TurboWarp
+
+### Regras previstas para `cocrea-gandi` (versao futura)
+
+- `cocrea-gandi` nao faz parte do escopo implementado da v1.1
+- esse tipo deve ser usado apenas para projetos publicados em plataforma/runtime compativel com extensoes Gandi
+- a modelagem prevista deve priorizar `source.projectUrl` como URL publica do projeto/embed
+- o launcher devera abrir esse tipo por embed/iframe do runtime compativel, sem tentar executar o projeto como `.sb3` no TurboWarp
+- a introducao de suporte real deve acontecer antes da fase de PWA/offline
 
 ### Regras de resolucao para `sb3-file` (v1.1)
 
@@ -171,6 +188,15 @@ Na v1, `catalog.json` sera mantido na raiz do projeto e tera um objeto raiz simp
 - `source.url` deve apontar para URL remota direta do `.sb3` usando `https` e CORS
 - quando `source.path` e `source.url` coexistirem no mesmo item, `source.path` tem prioridade
 - o launcher deve enviar a URL final resolvida para o TurboWarp via parametro `project_url`
+
+### Convencao atual de organizacao de arquivos `.sb3`
+
+- `public/sb3-files/scratch/` concentra arquivos `.sb3` exportados/originados do Scratch e executados pelo fluxo `sb3-file` via TurboWarp
+- `public/sb3-files/turbowarp/` concentra arquivos `.sb3` destinados ao fluxo `sb3-file`
+- `public/sb3-files/cocrea-gandi/` concentra arquivos `.sb3` identificados como dependentes de runtime/extensoes Gandi/Cocrea
+- arquivos mantidos em `public/sb3-files/scratch/` podem ser cadastrados como `sb3-file` quando forem compativeis com execucao no TurboWarp
+- arquivos mantidos em `public/sb3-files/cocrea-gandi/` nao devem ser considerados compativeis com `sb3-file`
+- enquanto nao houver um `.sb3` compativel em `public/sb3-files/turbowarp/` ou `public/sb3-files/scratch/`, o `catalog.json` pode permanecer sem itens locais de teste para `sb3-file`
 
 ### Regras de modelagem
 

@@ -285,3 +285,59 @@ Para itens `sb3-file`, o launcher deve seguir as regras abaixo:
 - o catalogo ganha padrao claro para fontes locais e remotas de `.sb3`
 - reduz falhas de execucao por caminhos relativos mal resolvidos em ambiente publicado
 - mantem o projeto compativel com GitHub Pages e sem dependencia de backend
+
+---
+
+## ADR-012 - Reservar `cocrea-gandi` como tipo de origem futuro antes de PWA
+
+- Status: aceito
+
+### Contexto
+
+Durante a validacao da v1.1 foi identificado que alguns projetos do ecossistema Sprunki dependem de extensoes do runtime Gandi/Cocrea, como `GandiQuake`, e portanto nao sao compativeis com execucao direta via TurboWarp usando `.sb3`.
+
+O projeto precisa registrar uma extensao futura do schema sem implementar imediatamente esse suporte e sem misturar essa entrega com a fase posterior de PWA/offline.
+
+### Decisao
+
+Reservar `cocrea-gandi` como novo valor futuro de `source.type` no `catalog.json`.
+
+Esse tipo representara projetos que exigem runtime/publicacao compativel com Gandi/Cocrea, preferencialmente via URL publica de projeto/embed em `source.projectUrl`.
+
+O suporte real a `cocrea-gandi` deve ser planejado para uma versao futura anterior a PWA/offline.
+
+### Consequencias
+
+- o schema passa a acomodar projetos Gandi/Cocrea sem forcar compatibilidade falsa com `sb3-file`
+- a v1.1 continua focada em `.sb3` compativel com TurboWarp
+- a ordem do roadmap passa a tratar suporte Gandi/Cocrea antes de PWA/offline
+
+### Convencao operacional derivada
+
+- arquivos `.sb3` exportados/originados do Scratch e compativeis com TurboWarp devem ficar em `public/sb3-files/scratch/`
+- arquivos `.sb3` compativeis com TurboWarp devem ficar em `public/sb3-files/turbowarp/`
+- arquivos `.sb3` dependentes de runtime/extensoes Gandi/Cocrea devem ficar em `public/sb3-files/cocrea-gandi/`
+- arquivos em `public/sb3-files/scratch/` podem entrar no catalogo como `sb3-file` quando a execucao no TurboWarp for valida
+- mover um arquivo para `public/sb3-files/cocrea-gandi/` sinaliza que ele nao deve entrar no catalogo como `sb3-file` ate existir suporte real a `cocrea-gandi`
+
+---
+
+## ADR-013 - Suportar `scratch-mit-edu` como origem oficial de embed do Scratch
+
+- Status: aceito
+
+### Contexto
+
+O catalogo ja suporta abertura via TurboWarp e `.sb3`, mas alguns itens podem precisar apontar diretamente para o player oficial do Scratch, sem intermediacao do runtime TurboWarp.
+
+### Decisao
+
+Adicionar `scratch-mit-edu` como novo valor suportado de `source.type`.
+
+Esse tipo reutiliza `source.projectId` e deve resolver a execucao para o embed oficial do Scratch em `https://scratch.mit.edu/projects/{projectId}/embed`.
+
+### Consequencias
+
+- o catalogo passa a diferenciar explicitamente projetos que devem abrir no player oficial do Scratch
+- `source.projectId` continua reutilizavel entre TurboWarp e Scratch, sem introduzir campo redundante
+- o launcher mantem a logica de resolucao centralizada por `source.type`
