@@ -30,20 +30,19 @@ Se houver divergencia entre documentos, siga esta prioridade:
 - Player via iframe do TurboWarp
 - Hospedagem-alvo em GitHub Pages
 - v1 concluida e validada em ambiente publicado
+- v1.1 concluida com suporte real a `.sb3`
 - Sem build step
 - Sem testes automatizados
 - Com schema inicial de `catalog.json` ja definido
 - Sem PWA/service worker
-- Sem suporte real a `.sb3`
 
 ## Objetivo atual do agent
 
 Priorizar a evolucao do projeto nesta sequencia:
 
-1. Manter estabilidade e coerencia documental da v1
-2. Planejar e implementar v1.1 com suporte real a `.sb3`, sem perder compatibilidade com GitHub Pages
-3. Preparar backlog detalhado da v2
-4. Avancar para suporte futuro a `cocrea-gandi`, depois download automatico de `.sb3`, PWA e offline nas fases seguintes
+1. Manter estabilidade e coerencia documental da v1.1
+2. Preparar backlog detalhado da v2
+3. Avancar para suporte futuro a `cocrea-gandi`, depois download automatico de `.sb3`, PWA e offline nas fases seguintes
 
 ## Convencoes de trabalho
 

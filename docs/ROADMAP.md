@@ -2,10 +2,10 @@
 
 ## Status geral
 
-- Versao atual alvo: v1.1
+- Versao atual alvo: v2
 - Hospedagem oficial: GitHub Pages
 - Status da v1: concluida
-- Status da v1.1: em andamento
+- Status da v1.1: concluida
 
 ## Objetivo da v1
 

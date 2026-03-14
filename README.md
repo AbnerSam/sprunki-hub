@@ -13,6 +13,7 @@ URL público atual=<https://abnersam.github.io/sprunki-hub/>
 - player via embed do TurboWarp
 - fluxo pensado para hospedagem no GitHub Pages
 - v1 concluida e validada em ambiente publicado
+- v1.1 concluida com suporte real a `.sb3`
 - sem build step
 - sem testes automatizados
 - schema inicial de `catalog.json` definido
@@ -99,7 +100,7 @@ sprunki-hub/
 
 ## Proximos marcos
 
-- executar as tasks da v1.1 em `docs/TASKS.md`
+- iniciar a proxima versao oficial em `docs/TASKS.md` quando houver novo ciclo ativo
 - preparar backlog detalhado da v2
 - manter consistencia de docs a cada fase concluida
 

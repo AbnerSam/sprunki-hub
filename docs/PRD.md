@@ -6,7 +6,7 @@ Sprunki Hub e um launcher/catalogo web para reunir diferentes versoes e mods de 
 O produto deve funcionar bem em tablets antigos e navegadores moveis, priorizando rapidez, simplicidade e expansao progressiva.
 
 Para a v1, o foco e propositalmente enxuto: documentacao coerente, `catalog.json` na raiz, `index.html` estatico e responsivo e fluxo basico de abrir jogos via TurboWarp em GitHub Pages.
-Com a v1 concluida, a iteracao ativa passa a ser a v1.1, acompanhada em `docs/ROADMAP.md` (macro) e `docs/TASKS.md` (microtasks).
+Com a v1.1 concluida, as proximas iteracoes seguem acompanhadas em `docs/ROADMAP.md` (macro) e, quando oficialmente iniciadas, em `docs/TASKS.md` (microtasks).
 
 ## Problema
 
@@ -220,7 +220,7 @@ O projeto sera considerado pronto em sua primeira versao robusta quando atender 
 
 - v1: concluida
 - ambiente de validacao oficial: GitHub Pages
-- v1.1: em andamento
+- v1.1: concluida
 - proximas iteracoes: definidas no `docs/ROADMAP.md`
 
 ## Roadmap por fases
